@@ -4,9 +4,12 @@
     <router-link to="/about">About</router-link>
   </div>
   <router-view />
+  <div class="btn btn-primary">AAA</div>
 </template>
 
 <style lang="scss">
+@import "~bootstrap/scss/bootstrap";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
