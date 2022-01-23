@@ -15,7 +15,7 @@
             <a class="nav-link" href="#/about">Link</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-cart"></i></a>
+            <a class="nav-link" href="#/Cart"><i class="bi bi-cart"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#/Login"><i class="bi bi-person-circle"></i></a>
