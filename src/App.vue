@@ -4,7 +4,7 @@
     <router-link to="/about">About</router-link>
   </div> -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+    <div class="container">
       <a class="navbar-brand" href="#">Coffee 專賣店</a>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
@@ -18,7 +18,7 @@
             <a class="nav-link" href="#"><i class="bi bi-cart"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#/Login">登入</a>
+            <a class="nav-link" href="#/Login"><i class="bi bi-person-circle"></i></a>
           </li>
         </ul>
       </div>
@@ -30,6 +30,10 @@
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.nav-item {
+  padding: 5px;
+}
 
 // #app {
 //   font-family: Avenir, Helvetica, Arial, sans-serif;
