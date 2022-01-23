@@ -15,7 +15,7 @@
             <a class="nav-link" href="#/about">Link</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">購物車</a>
+            <a class="nav-link" href="#"><i class="bi bi-cart"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#/Login">登入</a>
@@ -29,7 +29,7 @@
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
-// @import "~bootstrap-icons/font/bootstrap-icons.scss";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 // #app {
 //   font-family: Avenir, Helvetica, Arial, sans-serif;
