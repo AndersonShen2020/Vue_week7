@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-// import router from "../router";
+import router from "../../router";
 import { login } from "../../api/axios";
 // const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
 // const path = "ashen"; // 請加入個人 API path
@@ -66,9 +66,9 @@ export default {
     //       alert(err.response.data.message);
     //     });
     // },
-    login() {
-      console.log(this.user);
-      login(this.user);
+    async login() {
+      await login(this.user);
+      router.push("/Dashboard");
     },
   },
 };

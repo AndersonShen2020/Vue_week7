@@ -1,7 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+
+// 前台
 import Home from "../views/FrontEnd/Home.vue";
 import Cart from "../views/FrontEnd/Cart.vue";
+
+// 後台
 import Login from "../views/BackEnd/Login.vue";
+import Dashboard from "../views/BackEnd/Dashboard.vue";
 
 const routes = [
   {
@@ -26,6 +31,11 @@ const routes = [
     path: "/Login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/Dashboard",
+    name: "Dashboard",
+    component: Dashboard,
   },
 ];
 
