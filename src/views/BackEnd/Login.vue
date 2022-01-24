@@ -31,13 +31,15 @@
       <button type="submit" class="btn btn-lg btn-primary w-100 mt-3" @click.prevent="login">
         登入
       </button>
+
+      <p class="mt-5 mb-3 text-muted">&copy; 2021~∞ - 六角學院</p>
     </form>
   </div>
 </template>
 <script>
 // import router from "../router";
-import axios from "axios";
-const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
+import { login } from "../../api/axios";
+// const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
 // const path = "ashen"; // 請加入個人 API path
 
 export default {
@@ -50,19 +52,23 @@ export default {
     };
   },
   methods: {
+    // login() {
+    //   axios
+    //     .post(`${url}/admin/signin`, this.user)
+    //     .then((res) => {
+    //       console.log(res);
+    //       // expired = unix timestamp
+    //       const { token, expired } = res.data;
+    //       document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
+    //       // router.push("/products");
+    //     })
+    //     .catch((err) => {
+    //       alert(err.response.data.message);
+    //     });
+    // },
     login() {
-      axios
-        .post(`${url}/admin/signin`, this.user)
-        .then((res) => {
-          console.log(res);
-          // expired = unix timestamp
-          const { token, expired } = res.data;
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
-          // router.push("/products");
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
+      console.log(this.user);
+      login(this.user);
     },
   },
 };
