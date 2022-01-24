@@ -37,7 +37,6 @@ const path = process.env.VUE_APP_PATH; // 請加入個人 API path
 // 登入帳號
 export async function login(user) {
   try {
-    console.log(user);
     const { token, expired } = await axios.post(`${url}/admin/signin`, user);
     document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
     console.log("登入成功");

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="formlogin">
+    <form class="formlogin" @submit.prevent="login">
       <h2 class="text-center mb-3">訂單後台管理中心</h2>
       <div class="form-floating mb-3">
         <input
@@ -39,8 +39,6 @@
 <script>
 import router from "../../router";
 import { login } from "../../api/axios";
-// const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
-// const path = "ashen"; // 請加入個人 API path
 
 export default {
   data() {
@@ -52,20 +50,6 @@ export default {
     };
   },
   methods: {
-    // login() {
-    //   axios
-    //     .post(`${url}/admin/signin`, this.user)
-    //     .then((res) => {
-    //       console.log(res);
-    //       // expired = unix timestamp
-    //       const { token, expired } = res.data;
-    //       document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
-    //       // router.push("/products");
-    //     })
-    //     .catch((err) => {
-    //       alert(err.response.data.message);
-    //     });
-    // },
     async login() {
       await login(this.user);
       router.push("/Dashboard");
