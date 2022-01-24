@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
-const path = "ashen"; // 請加入個人 API path
+// const url = "https://vue3-course-api.hexschool.io/v2"; // 請加入站點
+// const path = "ashen"; // 請加入個人 API path
+const url = process.env.VUE_APP_API; // 請加入站點
+const path = process.env.VUE_APP_PATH; // 請加入個人 API path
 
 // #5 取得後台產品列表
 // export async function getProducts(url, path) {
