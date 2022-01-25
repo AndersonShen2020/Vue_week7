@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="formlogin" @submit.prevent="login">
+    <form class="formlogin" @submit.prevent="signIn">
       <h2 class="text-center mb-3">訂單後台管理中心</h2>
       <div class="form-floating mb-3">
         <input
@@ -28,7 +28,7 @@
         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
         <label class="form-check-label" for="flexCheckChecked"> 記住我 </label>
       </div>
-      <button type="submit" class="btn btn-lg btn-primary w-100 mt-3" @click.prevent="login">
+      <button type="submit" class="btn btn-lg btn-primary w-100 mt-3" @click.prevent="signIn">
         登入
       </button>
 
@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    async login() {
+    async signIn() {
       await login(this.user);
       router.push("/Dashboard");
     },
