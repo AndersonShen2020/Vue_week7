@@ -10,7 +10,15 @@
   </div>
 </template>
 <script>
-export default {};
+// import axios from "axios";
+// import { checkAdmin } from "../../api/axios";
+import { checkAdmin } from "@/api/axios";
+
+export default {
+  mounted() {
+    checkAdmin();
+  },
+};
 </script>
 <style lang="scss">
 .sidebar {
