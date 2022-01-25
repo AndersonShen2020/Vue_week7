@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../router";
 
 const url = process.env.VUE_APP_API; // 請加入站點
 const path = process.env.VUE_APP_PATH; // 請加入個人 API path
@@ -27,6 +28,7 @@ export async function checkAdmin() {
     console.log("確認用戶仍然持續登入");
   } catch (err) {
     console.log(err.response.data.message);
+    router.push("/Login");
   }
 }
 

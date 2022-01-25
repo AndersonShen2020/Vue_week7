@@ -11,6 +11,7 @@
 </template>
 <script>
 // import axios from "axios";
+// import router from "../../router/index";
 // import { checkAdmin } from "../../api/axios";
 import { checkAdmin } from "@/api/axios";
 
