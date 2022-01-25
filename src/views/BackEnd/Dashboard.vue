@@ -2,17 +2,16 @@
   <div class="d-flex">
     <aside class="sidebar">
       <ul class="list-group list-group-flush bg-transparent">
-        <li class="list-group-item">首頁</li>
-        <li class="list-group-item">產品</li>
+        <li class="list-group-item"><a class="nav-link" href="#/Dashboard">首頁</a></li>
+        <li class="list-group-item"><a class="nav-link" href="#/Dashboard/Products">產品</a></li>
       </ul>
     </aside>
-    <main class="main"></main>
+    <main class="main">
+      <!-- <router-view name="backboard" /> -->
+    </main>
   </div>
 </template>
 <script>
-// import axios from "axios";
-// import router from "../../router/index";
-// import { checkAdmin } from "../../api/axios";
 import { checkAdmin } from "@/api/axios";
 
 export default {

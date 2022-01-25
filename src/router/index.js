@@ -7,6 +7,7 @@ import Cart from "../views/FrontEnd/Cart.vue";
 // 後台
 import Login from "../views/BackEnd/Login.vue";
 import Dashboard from "../views/BackEnd/Dashboard.vue";
+// import Products from "../views/BackEnd/Dashboard/Products.vue";
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     path: "/Dashboard",
     name: "Dashboard",
     component: Dashboard,
+    // children: [
+    //   {
+    //     name: "products",
+    //     component: { backboard: Products },
+    //   },
+    // ],
   },
 ];
 
