@@ -7,7 +7,7 @@ import Cart from "../views/FrontEnd/Cart.vue";
 // 後台
 import Login from "../views/BackEnd/Login.vue";
 import Dashboard from "../views/BackEnd/Dashboard.vue";
-import Products from "../views/BackEnd/Dashboard/Products.vue";
+import Products from "../views/BackEnd/Products.vue";
 
 const routes = [
   // 前端

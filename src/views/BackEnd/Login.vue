@@ -37,8 +37,8 @@
   </div>
 </template>
 <script>
-import router from "../../router";
-import { login } from "../../api/axios";
+import router from "@/router";
+import { login } from "@/api/axios";
 
 export default {
   data() {
