@@ -1,12 +1,7 @@
 <template>
   <Navbar></Navbar>
   <div class="d-flex">
-    <aside class="sidebar">
-      <ul class="list-group list-group-flush bg-transparent">
-        <li class="list-group-item"><a class="nav-link" href="#/admin">首頁</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#/admin/Products">產品</a></li>
-      </ul>
-    </aside>
+    <Sidebar></Sidebar>
     <main class="main">
       <router-view />
     </main>
@@ -14,11 +9,13 @@
 </template>
 <script>
 import Navbar from "@/components/BackEnd/Navbar.vue";
+import Sidebar from "@/components/BackEnd/Sidebar.vue";
 import { checkAdmin } from "@/api/axios";
 
 export default {
   components: {
     Navbar,
+    Sidebar,
   },
   mounted() {
     checkAdmin();
