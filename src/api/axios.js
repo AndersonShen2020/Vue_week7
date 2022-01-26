@@ -13,7 +13,7 @@ export async function login(user) {
     document.cookie = `hexToken=${data.token}; expires=${new Date(data.expired)};`;
     console.log("登入成功");
   } catch (err) {
-    console.log(err.response.data.message);
+    alert(err.response.data.message);
   }
 }
 
@@ -27,7 +27,7 @@ export async function checkAdmin() {
     await axios.post(`${url}/api/user/check`);
     console.log("確認用戶仍然持續登入");
   } catch (err) {
-    console.log(err.response.data.message);
+    alert(err.response.data.message);
     router.push("/Login");
   }
 }
@@ -38,6 +38,6 @@ export async function getProducts() {
     const { data } = await axios.get(`${url}/api/${path}/admin/products`);
     return data.products;
   } catch (err) {
-    console.log(err.response.data.message);
+    alert(err.response.data.message);
   }
 }

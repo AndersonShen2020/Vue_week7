@@ -4,6 +4,24 @@
   </div>
 </template>
 <script>
-export default {};
+import { getProducts } from "@/api/axios";
+
+export default {
+  data() {
+    return {
+      products: [],
+    };
+  },
+
+  methods: {
+    async init() {
+      this.products = [...(await getProducts())];
+    },
+  },
+
+  created() {
+    this.init();
+  },
+};
 </script>
 <style lang="scss"></style>
