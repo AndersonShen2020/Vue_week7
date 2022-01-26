@@ -52,7 +52,7 @@ export default {
   methods: {
     async signIn() {
       await login(this.user);
-      router.push("/Dashboard");
+      router.push("/admin");
     },
   },
 };

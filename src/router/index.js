@@ -7,9 +7,10 @@ import Cart from "../views/FrontEnd/Cart.vue";
 // 後台
 import Login from "../views/BackEnd/Login.vue";
 import Dashboard from "../views/BackEnd/Dashboard.vue";
-// import Products from "../views/BackEnd/Dashboard/Products.vue";
+import Products from "../views/BackEnd/Dashboard/Products.vue";
 
 const routes = [
+  // 前端
   {
     path: "/",
     name: "Layout",
@@ -22,21 +23,24 @@ const routes = [
       },
     ],
   },
+  // 登入
   {
     path: "/Login",
     name: "Login",
     component: Login,
   },
+  // 後台
   {
-    path: "/Dashboard",
+    path: "/admin",
     name: "Dashboard",
     component: Dashboard,
-    // children: [
-    //   {
-    //     name: "products",
-    //     component: { backboard: Products },
-    //   },
-    // ],
+    children: [
+      {
+        path: "products",
+        name: "products",
+        component: Products,
+      },
+    ],
   },
 ];
 

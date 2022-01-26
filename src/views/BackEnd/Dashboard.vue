@@ -3,12 +3,12 @@
   <div class="d-flex">
     <aside class="sidebar">
       <ul class="list-group list-group-flush bg-transparent">
-        <li class="list-group-item"><a class="nav-link" href="#/Dashboard">首頁</a></li>
-        <li class="list-group-item"><a class="nav-link" href="#/Dashboard/Products">產品</a></li>
+        <li class="list-group-item"><a class="nav-link" href="#/admin">首頁</a></li>
+        <li class="list-group-item"><a class="nav-link" href="#/admin/Products">產品</a></li>
       </ul>
     </aside>
     <main class="main">
-      <!-- <router-view name="backboard" /> -->
+      <router-view />
     </main>
   </div>
 </template>
