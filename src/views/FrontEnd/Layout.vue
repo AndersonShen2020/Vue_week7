@@ -12,14 +12,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.nav-item {
-  padding: 5px;
-}
-
-// 切版格線,切版完後要刪除
-* {
-  outline: 1px solid #000;
-}
-</style>

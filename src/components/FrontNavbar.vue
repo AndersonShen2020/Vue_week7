@@ -21,3 +21,9 @@
     </div>
   </nav>
 </template>
+
+<style lang="scss">
+.nav-item {
+  padding: 5px;
+}
+</style>
