@@ -1,4 +1,5 @@
 <template>
+  <Navbar></Navbar>
   <div class="d-flex">
     <aside class="sidebar">
       <ul class="list-group list-group-flush bg-transparent">
@@ -12,9 +13,13 @@
   </div>
 </template>
 <script>
+import Navbar from "@/components/BackEnd/Navbar.vue";
 import { checkAdmin } from "@/api/axios";
 
 export default {
+  components: {
+    Navbar,
+  },
   mounted() {
     checkAdmin();
   },
