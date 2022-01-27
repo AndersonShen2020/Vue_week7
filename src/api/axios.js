@@ -45,9 +45,27 @@ export async function getProducts() {
 // 上傳單一產品
 export async function addProduct(product) {
   try {
+    await axios.post(`${url}/api/${path}/admin/product`, product);
+  } catch (err) {
+    alert(err.response.data.message);
+  }
+}
+
+// 修改單一產品
+export async function updateProduct(product) {
+  try {
     console.log(product);
-    const data = await axios.post(`${url}/api/${path}/admin/product`, product);
-    console.log(data);
+    await axios.put(`${url}/api/${path}/admin/product/${product.id}`, product);
+  } catch (err) {
+    alert(err.response.data.message);
+  }
+}
+
+// 刪除單一產品
+export async function deleteProduct(id) {
+  try {
+    console.log(`${url}/api/${path}/admin/product/${id}`);
+    await axios.delete(`${url}/api/${path}/admin/product/${id}`);
   } catch (err) {
     alert(err.response.data.message);
   }

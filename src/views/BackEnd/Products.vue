@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="text-end mt-4">
-      <button class="btn btn-primary" @click="addModal">建立新的產品</button>
+      <button class="btn btn-primary" @click="showModal('new')">建立新的產品</button>
     </div>
     <table class="table mt-4">
       <thead>
@@ -26,8 +26,20 @@
           </td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-outline-primary btn-sm">編輯</button>
-              <button type="button" class="btn btn-outline-danger btn-sm">刪除</button>
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm"
+                @click="showModal('update', product)"
+              >
+                編輯
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="showModal('delete', product)"
+              >
+                刪除
+              </button>
             </div>
           </td>
         </tr>
@@ -47,7 +59,8 @@
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 id="productModalLabel" class="modal-title">
-            <span>新增產品</span>
+            <span v-if="isNew">新增產品</span>
+            <span v-else>編輯產品</span>
           </h5>
           <button
             type="button"
@@ -61,22 +74,55 @@
             <div class="col-sm-4">
               <div class="mb-2">
                 <div class="mb-3">
-                  <label for="imageUrl" class="form-label">輸入圖片網址</label>
+                  <label for="imageUrl" class="form-label">主要圖片網址</label>
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="請輸入圖片連結"
+                    placeholder="請輸入主要圖片連結"
                     v-model="tempProduct.imageUrl"
                   />
                 </div>
                 <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
               </div>
-              <div>
-                <button class="btn btn-outline-primary btn-sm d-block w-100">新增圖片</button>
+              <h3>多圖新增</h3>
+              <div v-if="Array.isArray(tempProduct.imagesUrl)">
+                <div v-for="(pic, idx) in tempProduct.imagesUrl" :key="idx">
+                  <label for="imageUrl" class="form-label">圖片網址</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="請輸入次要圖片連結"
+                    v-model="tempProduct.imagesUrl[idx]"
+                  />
+                  <img class="img-fluid" :src="pic" alt="" />
+                </div>
+                <div
+                  v-if="
+                    !tempProduct.imagesUrl.length ||
+                    tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1]
+                  "
+                >
+                  <button
+                    class="btn btn-outline-primary btn-sm d-block w-100"
+                    @click="tempProduct.imagesUrl.push('')"
+                  >
+                    新增圖片
+                  </button>
+                </div>
+                <div v-else>
+                  <button
+                    class="btn btn-outline-danger btn-sm d-block w-100"
+                    @click="tempProduct.imagesUrl.pop()"
+                  >
+                    刪除圖片
+                  </button>
+                </div>
               </div>
-              <!-- <div v-else>
-                <button class="btn btn-outline-danger btn-sm d-block w-100">刪除圖片</button>
-              </div> -->
+              <div v-else>
+                <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImages">
+                  新增圖片
+                </button>
+              </div>
             </div>
             <div class="col-sm-8">
               <div class="mb-3">
@@ -177,11 +223,12 @@
             </div>
           </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="addItem">確認</button>
+          <button type="button" class="btn btn-primary" @click="updateItem">確認</button>
         </div>
       </div>
     </div>
@@ -209,13 +256,13 @@
         </div>
         <div class="modal-body">
           是否刪除
-          <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
+          <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-danger">確認刪除</button>
+          <button type="button" class="btn btn-danger" @click="deleteItem">確認刪除</button>
         </div>
       </div>
     </div>
@@ -223,25 +270,29 @@
   <!-- Modal -->
 </template>
 <script>
-import { getProducts, addProduct } from "@/api/axios";
+import { getProducts, addProduct, deleteProduct } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
+import axios from "axios";
+
+const tempProduct = {
+  title: "",
+  category: "",
+  origin_price: 0,
+  price: 0,
+  unit: "",
+  description: "",
+  content: "",
+  is_enabled: 1,
+  imageUrl: "",
+  imagesUrl: [""],
+};
 
 export default {
   data() {
     return {
       products: [],
-      tempProduct: {
-        title: "",
-        category: "",
-        origin_price: 0,
-        price: 0,
-        unit: "",
-        description: "",
-        content: "",
-        is_enabled: 1,
-        imageUrl: "",
-        imagesUrl: [],
-      },
+      isNew: false,
+      tempProduct,
       productModal: null,
       delProductModal: null,
     };
@@ -251,11 +302,50 @@ export default {
     async init() {
       this.products = [...(await getProducts())];
     },
-    addItem() {
-      addProduct({ data: this.tempProduct });
+    showModal(state, item) {
+      if (state === "new") {
+        this.tempProduct = { ...tempProduct };
+        this.isNew = true;
+        this.productModal.show();
+      } else if (state === "update") {
+        console.log("update");
+        this.tempProduct = { ...item };
+        this.isNew = false;
+        this.productModal.show();
+      } else if (state === "delete") {
+        console.log("delete");
+        this.tempProduct = { ...item };
+        this.delProductModal.show();
+      }
     },
-    addModal() {
-      this.productModal.show();
+    updateItem() {
+      if (this.isNew === true) {
+        addProduct({ data: this.tempProduct });
+        this.productModal.hide();
+      } else {
+        // updateProduct({ data: this.tempProduct });
+        // 有問題，為甚麼產品使用 updateProduct 傳到 axios.js 會收不到物件，但同樣辦法用在 addProduct 就能？
+        // 先使用一般的 axios 作法來代替
+        let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
+        axios
+          .put(url, { data: this.tempProduct })
+          .then((response) => {
+            alert(response.data.message);
+            this.getData();
+          })
+          .catch((err) => {
+            alert(err.data.message);
+          });
+        this.productModal.hide();
+      }
+    },
+    deleteItem() {
+      deleteProduct(this.tempProduct.id);
+      this.delProductModal.hide();
+    },
+    createImages() {
+      this.tempProduct.imagesUrl = [];
+      this.tempProduct.imagesUrl.push("");
     },
   },
 
@@ -270,6 +360,9 @@ export default {
     this.delProductModal = new modal(document.getElementById("delProductModal"), {
       keyboard: false,
     });
+  },
+  updated() {
+    this.init();
   },
 };
 </script>
