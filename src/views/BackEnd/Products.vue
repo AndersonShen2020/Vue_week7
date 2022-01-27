@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="text-end mt-4">
-      <button class="btn btn-primary">建立新的產品</button>
+      <button class="btn btn-primary" @click="addModal">建立新的產品</button>
     </div>
     <table class="table mt-4">
       <thead>
@@ -15,14 +15,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="text-end"></td>
-          <td class="text-end"></td>
+        <tr v-for="product in products" :key="product.id">
+          <td>{{ product.category }}</td>
+          <td>{{ product.title }}</td>
+          <td class="text-end">{{ product.origin_price }}</td>
+          <td class="text-end">{{ product.price }}</td>
           <td>
-            <span class="text-success">啟用</span>
-            <span>未啟用</span>
+            <span class="text-success" v-if="product.is_enabled">啟用</span>
+            <span v-else>未啟用</span>
           </td>
           <td>
             <div class="btn-group">
@@ -196,10 +196,7 @@
 </template>
 <script>
 import { getProducts, addProduct } from "@/api/axios";
-// import modal from "bootstrap/js/dist/modal";
-
-// let productModal = null;
-// let delProductModal = null;
+import modal from "bootstrap/js/dist/modal";
 
 export default {
   data() {
@@ -217,6 +214,8 @@ export default {
         imageUrl: "主圖網址",
         imagesUrl: ["圖片網址一", "圖片網址二", "圖片網址三", "圖片網址四", "圖片網址五"],
       },
+      productModal: null,
+      delProductModal: null,
     };
   },
 
@@ -227,6 +226,9 @@ export default {
     addItem() {
       addProduct({ data: this.tempProduct });
     },
+    addModal() {
+      this.productModal.show();
+    },
   },
 
   created() {
@@ -234,13 +236,13 @@ export default {
     console.log(this.tempProduct);
   },
   mounted() {
-    // productModal = new modal(document.getElementById("productModal"), {
-    //   keyboard: false,
-    // });
-    // // 刪除使用 delProductModal
-    // delProductModal = new modal(document.getElementById("delProductModal"), {
-    //   keyboard: false,
-    // });
+    this.productModal = new modal(document.getElementById("productModal"), {
+      keyboard: false,
+    });
+    // 刪除使用 delProductModal
+    this.delProductModal = new modal(document.getElementById("delProductModal"), {
+      keyboard: false,
+    });
   },
 };
 </script>
