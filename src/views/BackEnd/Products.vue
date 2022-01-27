@@ -62,9 +62,14 @@
               <div class="mb-2">
                 <div class="mb-3">
                   <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                  <input type="text" class="form-control" placeholder="請輸入圖片連結" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="請輸入圖片連結"
+                    v-model="tempProduct.imageUrl"
+                  />
                 </div>
-                <img class="img-fluid" src="" alt="" />
+                <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
               </div>
               <div>
                 <button class="btn btn-outline-primary btn-sm d-block w-100">新增圖片</button>
@@ -76,17 +81,35 @@
             <div class="col-sm-8">
               <div class="mb-3">
                 <label for="title" class="form-label">標題</label>
-                <input id="title" type="text" class="form-control" placeholder="請輸入標題" />
+                <input
+                  id="title"
+                  type="text"
+                  class="form-control"
+                  placeholder="請輸入標題"
+                  v-model="tempProduct.title"
+                />
               </div>
 
               <div class="row">
                 <div class="mb-3 col-md-6">
                   <label for="category" class="form-label">分類</label>
-                  <input id="category" type="text" class="form-control" placeholder="請輸入分類" />
+                  <input
+                    id="category"
+                    type="text"
+                    class="form-control"
+                    placeholder="請輸入分類"
+                    v-model="tempProduct.category"
+                  />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">單位</label>
-                  <input id="unit" type="text" class="form-control" placeholder="請輸入單位" />
+                  <input
+                    id="unit"
+                    type="text"
+                    class="form-control"
+                    placeholder="請輸入單位"
+                    v-model="tempProduct.unit"
+                  />
                 </div>
               </div>
 
@@ -99,6 +122,7 @@
                     min="0"
                     class="form-control"
                     placeholder="請輸入原價"
+                    v-model="tempProduct.origin_price"
                   />
                 </div>
                 <div class="mb-3 col-md-6">
@@ -109,6 +133,7 @@
                     min="0"
                     class="form-control"
                     placeholder="請輸入售價"
+                    v-model="tempProduct.price"
                   />
                 </div>
               </div>
@@ -121,6 +146,7 @@
                   type="text"
                   class="form-control"
                   placeholder="請輸入產品描述"
+                  v-model="tempProduct.description"
                 >
                 </textarea>
               </div>
@@ -131,6 +157,7 @@
                   type="text"
                   class="form-control"
                   placeholder="請輸入說明內容"
+                  v-model="tempProduct.content"
                 >
                 </textarea>
               </div>
@@ -142,6 +169,7 @@
                     type="checkbox"
                     :true-value="1"
                     :false-value="0"
+                    v-model="tempProduct.is_enabled"
                   />
                   <label class="form-check-label" for="is_enabled">是否啟用</label>
                 </div>
@@ -153,7 +181,7 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary">確認</button>
+          <button type="button" class="btn btn-primary" @click="addItem">確認</button>
         </div>
       </div>
     </div>
@@ -203,16 +231,16 @@ export default {
     return {
       products: [],
       tempProduct: {
-        title: "[賣]動物園造型衣服3",
-        category: "衣服2",
-        origin_price: 100,
-        price: 300,
-        unit: "個",
-        description: "Sit down please 名設計師設計",
-        content: "這是內容",
+        title: "",
+        category: "",
+        origin_price: 0,
+        price: 0,
+        unit: "",
+        description: "",
+        content: "",
         is_enabled: 1,
-        imageUrl: "主圖網址",
-        imagesUrl: ["圖片網址一", "圖片網址二", "圖片網址三", "圖片網址四", "圖片網址五"],
+        imageUrl: "",
+        imagesUrl: [],
       },
       productModal: null,
       delProductModal: null,
@@ -233,7 +261,6 @@ export default {
 
   created() {
     this.init();
-    console.log(this.tempProduct);
   },
   mounted() {
     this.productModal = new modal(document.getElementById("productModal"), {
