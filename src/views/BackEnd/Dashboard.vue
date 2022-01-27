@@ -2,7 +2,7 @@
   <Navbar></Navbar>
   <div class="d-flex">
     <Sidebar></Sidebar>
-    <main class="main">
+    <main class="main w-100">
       <router-view />
     </main>
   </div>

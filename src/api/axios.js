@@ -41,3 +41,14 @@ export async function getProducts() {
     alert(err.response.data.message);
   }
 }
+
+// 上傳單一產品
+export async function addProduct(product) {
+  try {
+    console.log(product);
+    const data = await axios.post(`${url}/api/${path}/admin/product`, product);
+    console.log(data);
+  } catch (err) {
+    alert(err.response.data.message);
+  }
+}
