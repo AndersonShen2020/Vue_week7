@@ -284,7 +284,7 @@ const tempProduct = {
   content: "",
   is_enabled: 1,
   imageUrl: "",
-  imagesUrl: [""],
+  imagesUrl: [],
 };
 
 export default {
@@ -304,7 +304,7 @@ export default {
     },
     showModal(state, item) {
       if (state === "new") {
-        this.tempProduct = { ...tempProduct };
+        this.tempProduct = JSON.parse(JSON.stringify(tempProduct));
         this.isNew = true;
         this.productModal.show();
       } else if (state === "update") {
