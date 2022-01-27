@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 // 前台
 // import Home from "../views/FrontEnd/Home.vue";
@@ -44,11 +44,8 @@ const routes = [
   },
 ];
 
-const history = createWebHistory(process.env.BASE_URL);
-// const history = createWebHashHistory();
-
 const router = createRouter({
-  history,
+  history: createWebHashHistory(),
   routes,
 });
 
