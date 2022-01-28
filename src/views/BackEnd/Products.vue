@@ -270,10 +270,10 @@
   <!-- Modal -->
 </template>
 <script>
-// import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
-import { getProducts, addProduct, deleteProduct } from "@/api/axios";
+import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
+// import { getProducts, addProduct, deleteProduct } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
-import axios from "axios";
+// import axios from "axios";
 
 const tempProduct = {
   title: "",
@@ -301,6 +301,7 @@ export default {
 
   methods: {
     async init() {
+      console.log("從遠端抓新資料");
       this.products = [...(await getProducts())];
     },
     showModal(state, item) {
@@ -319,24 +320,12 @@ export default {
         this.delProductModal.show();
       }
     },
-    updateItem() {
+    async updateItem() {
       if (this.isNew === true) {
-        addProduct({ data: this.tempProduct });
+        await addProduct({ data: this.tempProduct });
         this.productModal.hide();
       } else {
-        // updateProduct({ data: this.tempProduct });
-        // 有問題，為甚麼產品使用 updateProduct 傳到 axios.js 會收不到物件，但同樣辦法用在 addProduct 就能？
-        // 先使用一般的 axios 作法來代替
-        let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
-        axios
-          .put(url, { data: this.tempProduct })
-          .then((response) => {
-            alert(response.data.message);
-            this.getData();
-          })
-          .catch((err) => {
-            alert(err.data.message);
-          });
+        await updateProduct({ data: this.tempProduct });
         this.productModal.hide();
       }
       this.init();

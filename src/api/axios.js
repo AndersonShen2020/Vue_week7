@@ -54,8 +54,8 @@ export async function addProduct(product) {
 // 修改單一產品
 export async function updateProduct(product) {
   try {
-    console.log(product);
-    await axios.put(`${url}/api/${path}/admin/product/${product.id}`, product);
+    console.log(product.data.id);
+    await axios.put(`${url}/api/${path}/admin/product/${product.data.id}`, product);
   } catch (err) {
     alert(err.response.data.message);
   }
