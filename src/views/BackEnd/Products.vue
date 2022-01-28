@@ -270,6 +270,7 @@
   <!-- Modal -->
 </template>
 <script>
+// import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
 import { getProducts, addProduct, deleteProduct } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
 import axios from "axios";
@@ -338,10 +339,12 @@ export default {
           });
         this.productModal.hide();
       }
+      this.init();
     },
     deleteItem() {
       deleteProduct(this.tempProduct.id);
       this.delProductModal.hide();
+      this.init();
     },
     createImages() {
       this.tempProduct.imagesUrl = [];
@@ -360,9 +363,6 @@ export default {
     this.delProductModal = new modal(document.getElementById("delProductModal"), {
       keyboard: false,
     });
-  },
-  updated() {
-    this.init();
   },
 };
 </script>
