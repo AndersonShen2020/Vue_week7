@@ -12,6 +12,7 @@ export async function login(user) {
     // 設定 cookie
     document.cookie = `hexToken=${data.token}; expires=${new Date(data.expired)};`;
     console.log("登入成功");
+    return true;
   } catch (err) {
     alert(err.response.data.message);
   }

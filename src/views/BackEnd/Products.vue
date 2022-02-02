@@ -311,7 +311,7 @@ export default {
         this.productModal.show();
       } else if (state === "update") {
         console.log("update");
-        this.tempProduct = { ...item };
+        this.tempProduct = JSON.parse(JSON.stringify(item));
         this.isNew = false;
         this.productModal.show();
       } else if (state === "delete") {
@@ -330,8 +330,8 @@ export default {
       }
       this.init();
     },
-    deleteItem() {
-      deleteProduct(this.tempProduct.id);
+    async deleteItem() {
+      await deleteProduct(this.tempProduct.id);
       this.delProductModal.hide();
       this.init();
     },

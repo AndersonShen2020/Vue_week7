@@ -51,8 +51,10 @@ export default {
   },
   methods: {
     async signIn() {
-      await login(this.user);
-      router.push("/admin");
+      const state = await login(this.user);
+      if (state === true) {
+        router.push("/admin");
+      }
     },
   },
 };
