@@ -40,6 +40,7 @@ export async function getProducts(page) {
     return data;
   } catch (err) {
     alert(err.response.data.message);
+    router.push("/Login");
   }
 }
 
