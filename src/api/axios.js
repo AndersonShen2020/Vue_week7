@@ -37,7 +37,7 @@ export async function checkAdmin() {
 export async function getProducts() {
   try {
     const { data } = await axios.get(`${url}/api/${path}/admin/products`);
-    return data.products;
+    return data;
   } catch (err) {
     alert(err.response.data.message);
   }

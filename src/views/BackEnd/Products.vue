@@ -271,9 +271,7 @@
 </template>
 <script>
 import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
-// import { getProducts, addProduct, deleteProduct } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
-// import axios from "axios";
 
 const tempProduct = {
   title: "",
@@ -302,7 +300,7 @@ export default {
   methods: {
     async init() {
       console.log("從遠端抓新資料");
-      this.products = [...(await getProducts())];
+      this.products = { ...(await getProducts()).products };
     },
     showModal(state, item) {
       if (state === "new") {
