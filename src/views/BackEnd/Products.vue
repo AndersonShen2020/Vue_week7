@@ -45,6 +45,7 @@
         </tr>
       </tbody>
     </table>
+    <pagination :pages="pagination" @emitpages="init"></pagination>
   </div>
   <!-- Modal -->
   <div
@@ -273,6 +274,9 @@
 import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
 
+// component
+import pagination from "@/components/common/pagination.vue";
+
 const tempProduct = {
   title: "",
   category: "",
@@ -287,9 +291,13 @@ const tempProduct = {
 };
 
 export default {
+  components: {
+    pagination,
+  },
   data() {
     return {
       products: [],
+      pagination: null,
       isNew: false,
       tempProduct,
       productModal: null,
@@ -298,9 +306,11 @@ export default {
   },
 
   methods: {
-    async init() {
+    async init(page = 1) {
       console.log("從遠端抓新資料");
-      this.products = { ...(await getProducts()).products };
+      const { products, pagination } = await getProducts(page);
+      this.products = products;
+      this.pagination = pagination;
     },
     showModal(state, item) {
       if (state === "new") {

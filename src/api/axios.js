@@ -34,9 +34,9 @@ export async function checkAdmin() {
 }
 
 // 取得產品列表
-export async function getProducts() {
+export async function getProducts(page) {
   try {
-    const { data } = await axios.get(`${url}/api/${path}/admin/products`);
+    const { data } = await axios.get(`${url}/api/${path}/admin/products?page=${page}`);
     return data;
   } catch (err) {
     alert(err.response.data.message);
