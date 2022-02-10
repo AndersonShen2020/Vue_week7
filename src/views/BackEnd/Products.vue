@@ -97,6 +97,8 @@ export default {
       const { products, pagination } = await getProducts(page);
       this.products = products;
       this.pagination = pagination;
+      this.productModal.hide();
+      this.delProductModal.hide();
     },
     showModal(state, item) {
       if (state === "new") {

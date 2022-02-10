@@ -189,7 +189,6 @@
 </template>
 <script>
 import { addProduct, updateProduct } from "@/api/axios";
-import modal from "bootstrap/js/dist/modal";
 
 export default {
   props: ["productinfo", "state"],
@@ -205,17 +204,12 @@ export default {
       if (this.isNew === true) {
         // 新增產品
         await addProduct({ data: this.tempProduct });
-        this.hideModal();
       } else {
         // 編輯產品
         await updateProduct({ data: this.tempProduct });
-        this.hideModal();
       }
       // 更新畫面
       this.$emit("update");
-    },
-    hideModal() {
-      this.productModal.hide();
     },
   },
   watch: {
@@ -225,11 +219,6 @@ export default {
     productinfo(newVal) {
       this.tempProduct = newVal;
     },
-  },
-  mounted() {
-    this.productModal = new modal(document.getElementById("productModal"), {
-      keyboard: false,
-    });
   },
 };
 </script>
