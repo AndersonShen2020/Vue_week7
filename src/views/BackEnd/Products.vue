@@ -53,7 +53,7 @@
   <!-- Modal -->
 </template>
 <script>
-import { getProducts, addProduct, updateProduct, deleteProduct } from "@/api/axios";
+import { getProducts } from "@/api/axios";
 import modal from "bootstrap/js/dist/modal";
 
 // component
@@ -113,21 +113,6 @@ export default {
         this.tempProduct = { ...item };
         this.delProductModal.show();
       }
-    },
-    async updateItem() {
-      if (this.isNew === true) {
-        await addProduct({ data: this.tempProduct });
-        this.productModal.hide();
-      } else {
-        await updateProduct({ data: this.tempProduct });
-        this.productModal.hide();
-      }
-      this.init();
-    },
-    async deleteItem() {
-      await deleteProduct(this.tempProduct.id);
-      this.delProductModal.hide();
-      this.init();
     },
     createImages() {
       this.tempProduct.imagesUrl = [];
