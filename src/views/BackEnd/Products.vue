@@ -49,40 +49,7 @@
   </div>
   <!-- Modal -->
   <productModal :productinfo="tempProduct" :state="isNew" @update="init"></productModal>
-  <div
-    id="delProductModal"
-    ref="delProductModal"
-    class="modal fade"
-    tabindex="-1"
-    aria-labelledby="delProductModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="delProductModalLabel" class="modal-title">
-            <span>刪除產品</span>
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          是否刪除
-          <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="deleteItem">確認刪除</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <delProductModal :productinfo="tempProduct" @update="init"></delProductModal>
   <!-- Modal -->
 </template>
 <script>
@@ -92,6 +59,7 @@ import modal from "bootstrap/js/dist/modal";
 // component
 import pagination from "@/components/common/pagination.vue";
 import productModal from "@/components/BackEnd/ProductModal.vue";
+import delProductModal from "@/components/BackEnd/delProduct.vue";
 
 const tempProduct = {
   title: "",
@@ -110,6 +78,7 @@ export default {
   components: {
     pagination,
     productModal,
+    delProductModal,
   },
   data() {
     return {

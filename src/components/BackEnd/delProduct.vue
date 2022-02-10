@@ -35,7 +35,34 @@
   </div>
 </template>
 <script>
+import { deleteProduct } from "@/api/axios";
+import modal from "bootstrap/js/dist/modal";
+
 export default {
-  props: ["productInfo"],
+  props: ["productinfo"],
+  data() {
+    return {
+      tempProduct: this.productinfo,
+      delProductModal: null,
+    };
+  },
+  methods: {
+    async deleteItem() {
+      await deleteProduct(this.tempProduct.id);
+      this.delProductModal.hide();
+      // 更新畫面
+      this.$emit("update");
+    },
+  },
+  watch: {
+    productinfo(newVal) {
+      this.tempProduct = newVal;
+    },
+  },
+  mounted() {
+    this.delProductModal = new modal(document.getElementById("delProductModal"), {
+      keyboard: false,
+    });
+  },
 };
 </script>
