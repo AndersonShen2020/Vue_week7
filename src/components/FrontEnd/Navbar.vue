@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
     <div class="container">
       <a class="navbar-brand" href="#">Coffee 專賣店</a>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
