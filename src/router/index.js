@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 // 前台
 // import Home from "../views/FrontEnd/Home.vue";
+import ProductsList from "../views/FrontEnd/Products.vue";
 import Cart from "../views/FrontEnd/Cart.vue";
 
 // 後台
@@ -16,6 +17,11 @@ const routes = [
     name: "Layout",
     component: () => import("@/views/FrontEnd/Layout.vue"),
     children: [
+      {
+        path: "/Products",
+        name: "Products",
+        component: ProductsList,
+      },
       {
         path: "/Cart",
         name: "Cart",
