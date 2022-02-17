@@ -4,7 +4,7 @@
       @click="clearAllCarts"
       class="btn btn-outline-danger"
       type="button"
-      :disabled="cartData?.carts?.length === 0"
+      :disabled="cartData.carts?.length === 0"
     >
       清空購物車
     </button>
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <template v-if="cartData?.carts">
+      <template v-if="cartData.carts">
         <tr v-for="item in cartData.carts" :key="item.id">
           <td>
             <button
@@ -64,11 +64,11 @@
     <tfoot>
       <tr>
         <td colspan="3" class="text-end">總計</td>
-        <td class="text-end">{{ cartData?.total }}</td>
+        <td class="text-end">{{ cartData.total }}</td>
       </tr>
       <tr>
         <td colspan="3" class="text-end text-success">折扣價</td>
-        <td class="text-end text-success">{{ cartData?.final_total }}</td>
+        <td class="text-end text-success">{{ cartData.final_total }}</td>
       </tr>
     </tfoot>
   </table>
@@ -84,14 +84,43 @@ export default {
     return {
       cartData: [],
       productId: null,
+      isLoadingItem: "",
     };
   },
-  methods: {},
+  methods: {
+    removeCartItem(id) {
+      this.isLoadingItem = id;
+      axios.delete(`${url}/api/${path}/cart/${id}`).then((res) => {
+        console.log(res);
+        this.getCart();
+        this.isLoadingItem = "";
+      });
+    },
+    getCart() {
+      axios.get(`${url}/api/${path}/cart`).then((res) => {
+        this.cartData = res.data.data;
+      });
+    },
+    updateCartItem(item) {
+      let data = {
+        product_id: item.id,
+        qty: item.qty,
+      };
+      axios.put(`${url}/api/${path}/cart/${item.id}`, { data }).then((res) => {
+        console.log(res);
+        this.getCart();
+        this.isLoadingItem = "";
+      });
+    },
+    clearAllCarts() {
+      axios.delete(`${url}/api/${path}/carts`).then((res) => {
+        console.log(res);
+        this.getCart();
+      });
+    },
+  },
   mounted() {
-    axios.get(`${url}/api/${path}/cart`).then((res) => {
-      console.log(res);
-      this.cartData = res.data.data;
-    });
+    this.getCart();
   },
 };
 </script>
