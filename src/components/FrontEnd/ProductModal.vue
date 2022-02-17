@@ -105,10 +105,15 @@
         </div>
 
         <div class="modal-footer">
+          <select id="" class="form-select w-auto" v-model="qty">
+            <option :value="num" v-for="num in 20" :key="`${num}`">
+              {{ num }}
+            </option>
+          </select>
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="updateItem">加入購物車</button>
+          <button type="button" class="btn btn-primary" @click="addToCart(id)">加入購物車</button>
         </div>
       </div>
     </div>
@@ -125,9 +130,23 @@ export default {
   data() {
     return {
       product: {},
+      qty: 1,
     };
   },
-  methods: {},
+  methods: {
+    addToCart(id, qty = 1) {
+      const data = {
+        product_id: id,
+        qty: this.qty | qty,
+      };
+      this.isLoadingItem = id;
+      axios.post(`${url}/api/${path}/cart`, { data }).then((res) => {
+        console.log(res);
+        this.isLoadingItem = "";
+        this.$emit("closeModal");
+      });
+    },
+  },
   mounted() {},
   watch: {
     id(newVal) {

@@ -51,7 +51,7 @@
       </tr>
     </tbody>
   </table>
-  <ProductModal :id="productId"></ProductModal>
+  <ProductModal :id="productId" @close-modal="hideModal"></ProductModal>
 </template>
 
 <script>
@@ -88,6 +88,9 @@ export default {
         console.log(res);
         this.isLoadingItem = "";
       });
+    },
+    hideModal() {
+      this.productModal.hide();
     },
   },
   mounted() {
