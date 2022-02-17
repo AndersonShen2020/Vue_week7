@@ -23,82 +23,19 @@
               </div>
             </div>
             <div class="col-sm-8">
-              <div class="mb-3">
-                <label for="title" class="form-label">標題</label>
-                <input
-                  id="title"
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入標題"
-                  v-model="product.title"
-                  disabled
-                />
-              </div>
-
               <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="category" class="form-label">分類</label>
-                  <input
-                    id="category"
-                    type="text"
-                    class="form-control"
-                    placeholder="請輸入分類"
-                    v-model="product.category"
-                    disabled
-                  />
+                <div class="mb-3">
+                  <p class="badge bg-primary rounded-pill">分類：{{ product.category }}</p>
                 </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">單位</label>
-                  <input
-                    id="unit"
-                    type="text"
-                    class="form-control"
-                    placeholder="請輸入單位"
-                    v-model="product.unit"
-                    disabled
-                  />
+                <div class="mb-3">
+                  <p>商品內容：{{ product.description }}</p>
                 </div>
-              </div>
-
-              <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">原價</label>
-                  <input
-                    id="origin_price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    placeholder="請輸入原價"
-                    v-model="product.origin_price"
-                    disabled
-                  />
+                <div class="mb-3 text-end">
+                  <h6>
+                    <del>原價：{{ product.origin_price }}</del>
+                  </h6>
+                  <h4>特價：{{ product.price }}</h4>
                 </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">售價</label>
-                  <input
-                    id="price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    placeholder="請輸入售價"
-                    v-model="product.price"
-                    disabled
-                  />
-                </div>
-              </div>
-              <hr />
-
-              <div class="mb-3">
-                <label for="description" class="form-label">產品描述</label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入產品描述"
-                  v-model="product.description"
-                  disabled
-                >
-                </textarea>
               </div>
             </div>
           </div>
