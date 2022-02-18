@@ -75,6 +75,9 @@
 </template>
 
 <script>
+import emitter from "@/api/mitt.js";
+console.log(emitter);
+
 import axios from "axios";
 const url = process.env.VUE_APP_API; // 請加入站點
 const path = process.env.VUE_APP_PATH; // 請加入個人 API path
@@ -120,7 +123,11 @@ export default {
     },
   },
   mounted() {
+    emitter.on("clearcart", this.getCart());
     this.getCart();
+  },
+  unmounted() {
+    emitter.off("clearcart", this.getCart());
   },
 };
 </script>

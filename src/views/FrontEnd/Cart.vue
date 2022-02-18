@@ -16,8 +16,8 @@ import Shoppingcart from "@/components/FrontEnd/Shoppingcart.vue";
 
 export default {
   components: {
-    ClientValidateForm,
     Shoppingcart,
+    ClientValidateForm,
   },
 };
 </script>

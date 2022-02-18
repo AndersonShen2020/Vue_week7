@@ -1,56 +1,96 @@
 <template>
-  <Form v-slot="{ errors }" @submit="onSubmit">
-    <label for="email" class="form-label">email</label>
-    <Field
-      id="email"
-      name="email"
-      type="email"
-      class="form-control"
-      :class="{ 'is-invalid': errors['email'] }"
-      placeholder="請輸入 Email"
-      rules="email|required"
-      v-model="user.email"
-    ></Field>
-    <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+  <Form ref="form" autocomplete="off" v-slot="{ errors }" @submit="onSubmit">
+    {{ errors }}
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <Field
+        id="email"
+        name="email"
+        type="email"
+        class="form-control"
+        :class="{ 'is-invalid': errors['email'] }"
+        rules="email"
+        placeholder="請輸入 Email"
+        v-model="clientFrom.user.email"
+      />
+      <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+    </div>
 
-    <label for="local" class="form-label">地區</label>
-    <Field
-      id="local"
-      name="地區"
-      class="form-control"
-      :class="{ 'is-invalid': errors['地區'] }"
-      placeholder="請輸入地區"
-      rules="required"
-      v-model="user.region"
-      as="select"
-    >
-      <option value="">請選擇地區</option>
-      <option value="台北市">台北市</option>
-      <option value="高雄市">高雄市</option>
-    </Field>
+    <div class="mb-3">
+      <label for="name" class="form-label">收件人姓名</label>
+      <Field
+        id="name"
+        name="姓名"
+        type="text"
+        class="form-control"
+        :class="{ 'is-invalid': errors['姓名'] }"
+        rules="required"
+        placeholder="請輸入姓名"
+        v-model="clientFrom.user.name"
+      />
+      <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+    </div>
 
-    <label for="phone" class="form-label">電話</label>
-    <Field
-      id="phone"
-      name="電話"
-      type="text"
-      class="form-control"
-      :class="{ 'is-invalid': errors['電話'] }"
-      placeholder="請輸入電話"
-      :rules="isPhone"
-      v-model="user.phone"
-    ></Field>
-    <error-message name="電話" class="invalid-feedback"></error-message>
+    <div class="mb-3">
+      <label for="tel" class="form-label">收件人電話</label>
+      <Field
+        id="tel"
+        name="mobile"
+        type="tel"
+        class="form-control"
+        :class="{ 'is-invalid': errors['mobile'] }"
+        :rules="isPhone"
+        placeholder="請輸入手機號碼"
+        v-model="clientFrom.user.tel"
+      />
+      <ErrorMessage name="mobile" v-slot="{ message }">
+        <span role="alert" class="invalid-feedback">{{ message }}</span>
+      </ErrorMessage>
+    </div>
 
-    <button class="btn btn-primary mt-3" type="submit">Submit</button>
+    <div class="mb-3">
+      <label for="address" class="form-label">收件人地址</label>
+      <Field
+        id="address"
+        name="地址"
+        type="text"
+        class="form-control"
+        :class="{ 'is-invalid': errors['地址'] }"
+        rules="required"
+        placeholder="請輸入地址"
+        v-model="clientFrom.user.address"
+      />
+      <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+    </div>
+
+    <div class="mb-3">
+      <label for="message" class="form-label">留言</label>
+      <textarea
+        id="message"
+        class="form-control"
+        cols="30"
+        rows="10"
+        v-model="clientFrom.message"
+      ></textarea>
+    </div>
+    <div class="text-end">
+      <button type="submit" class="btn btn-danger">送出訂單</button>
+    </div>
   </Form>
 </template>
 
 <script>
+import emitter from "@/api/mitt.js";
+console.log(emitter);
+
 import { Form, Field, ErrorMessage, defineRule, configure } from "vee-validate";
 import { required, email, min } from "@vee-validate/rules";
 import { localize, setLocale } from "@vee-validate/i18n";
 import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
+
+import axios from "axios";
+const url = process.env.VUE_APP_API; // 請加入站點
+const path = process.env.VUE_APP_PATH; // 請加入個人 API path
 
 defineRule("required", required);
 defineRule("email", email);
@@ -66,10 +106,14 @@ setLocale("zh_TW");
 export default {
   data() {
     return {
-      user: {
-        email: "",
-        region: "",
-        phone: "",
+      clientFrom: {
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: "",
+        },
+        message: "",
       },
     };
   },
@@ -79,24 +123,20 @@ export default {
     ErrorMessage,
   },
   methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
+    async onSubmit() {
+      await axios
+        .post(`${url}/api/${path}/order`, { data: this.clientFrom })
+        .then((res) => {
+          console.log(res);
+          alert(res.data.message);
+          this.$refs.form.resetForm();
+        })
+        .catch((err) => console.dir(err));
+      this.emit();
     },
-    // validateEmail(value) {
-    //   // if the field is empty
-    //   if (!value) {
-    //     return "This field is required";
-    //   }
-
-    //   // if the field is not a valid email
-    //   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    //   if (!regex.test(value)) {
-    //     return "This field must be a valid email";
-    //   }
-
-    //   // All is good
-    //   return true;
-    // },
+    emit() {
+      emitter.emit("clearcart");
+    },
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : "需要正確的電話號碼";
