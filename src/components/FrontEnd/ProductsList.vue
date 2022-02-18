@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <table class="table align-middle">
     <thead>
       <tr>
@@ -62,17 +63,23 @@ const path = process.env.VUE_APP_PATH; // 請加入個人 API path
 import ProductModal from "@/components/FrontEnd/ProductModal.vue";
 import modal from "bootstrap/js/dist/modal";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   components: {
     ProductModal,
+    Loading,
   },
   data() {
     return {
       products: [],
       productId: null,
       isLoadingItem: "",
+      isLoading: false,
     };
   },
+
   methods: {
     openProductModal(id) {
       this.productId = id;
@@ -94,8 +101,10 @@ export default {
     },
   },
   mounted() {
+    this.isLoading = true;
     axios.get(`${url}/api/${path}/products/all`).then((res) => {
       this.products = res.data.products;
+      this.isLoading = false;
     });
     this.productModal = new modal(document.getElementById("productModal"), {
       keyboard: false,

@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="text-end">
     <button
       @click="clearAllCarts"
@@ -82,12 +83,19 @@ import axios from "axios";
 const url = process.env.VUE_APP_API; // 請加入站點
 const path = process.env.VUE_APP_PATH; // 請加入個人 API path
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading,
+  },
   data() {
     return {
       cartData: [],
       productId: null,
       isLoadingItem: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -102,6 +110,7 @@ export default {
     getCart() {
       axios.get(`${url}/api/${path}/cart`).then((res) => {
         this.cartData = res.data.data;
+        this.isLoading = false;
       });
     },
     updateCartItem(item) {
@@ -123,6 +132,7 @@ export default {
     },
   },
   mounted() {
+    this.isLoading = true;
     emitter.on("clearcart", this.getCart());
     this.getCart();
   },
