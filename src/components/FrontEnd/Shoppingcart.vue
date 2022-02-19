@@ -77,7 +77,6 @@
 
 <script>
 import emitter from "@/api/mitt.js";
-console.log(emitter);
 
 import axios from "axios";
 const url = process.env.VUE_APP_API; // 請加入站點
@@ -131,13 +130,22 @@ export default {
       });
     },
   },
+  created() {
+    const vm = this;
+    emitter.on("clearCart", () => {
+      vm.getCart();
+    });
+  },
   mounted() {
+    console.log(emitter);
     this.isLoading = true;
-    emitter.on("clearcart", this.getCart());
     this.getCart();
   },
   unmounted() {
-    emitter.off("clearcart", this.getCart());
+    const vm = this;
+    emitter.off("clearCart", () => {
+      vm.getCart();
+    });
   },
 };
 </script>

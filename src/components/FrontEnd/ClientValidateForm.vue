@@ -1,6 +1,5 @@
 <template>
   <Form ref="form" autocomplete="off" v-slot="{ errors }" @submit="onSubmit">
-    {{ errors }}
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <Field
@@ -74,14 +73,13 @@
       ></textarea>
     </div>
     <div class="text-end">
-      <button type="submit" class="btn btn-danger">送出訂單</button>
+      <button ref="sendOrder" type="submit" class="btn btn-danger">送出訂單</button>
     </div>
   </Form>
 </template>
 
 <script>
 import emitter from "@/api/mitt.js";
-console.log(emitter);
 
 import { Form, Field, ErrorMessage, defineRule, configure } from "vee-validate";
 import { required, email, min } from "@vee-validate/rules";
@@ -135,7 +133,7 @@ export default {
       this.emit();
     },
     emit() {
-      emitter.emit("clearcart");
+      emitter.emit("clearCart");
     },
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
