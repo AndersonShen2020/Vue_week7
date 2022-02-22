@@ -2,21 +2,27 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 // 前台
 // import Home from "../views/FrontEnd/Home.vue";
-import ProductsList from "../views/FrontEnd/Products.vue";
-import Cart from "../views/FrontEnd/Cart.vue";
+import about from "@/views/FrontEnd/AboutView.vue";
+import ProductsList from "../views/FrontEnd/ProductsView.vue";
+import Cart from "../views/FrontEnd/CartView.vue";
 
 // 後台
-import Login from "../views/BackEnd/Login.vue";
-import Dashboard from "../views/BackEnd/Dashboard.vue";
-import Products from "../views/BackEnd/Products.vue";
+import Login from "../views/BackEnd/LoginView.vue";
+import Dashboard from "../views/BackEnd/DashboardView.vue";
+import Products from "../views/BackEnd/ProductsView.vue";
 
 const routes = [
   // 前端
   {
     path: "/",
     name: "Layout",
-    component: () => import("@/views/FrontEnd/Layout.vue"),
+    component: () => import("@/views/FrontEnd/LayoutView.vue"),
     children: [
+      {
+        path: "/about",
+        name: "about",
+        component: about,
+      },
       {
         path: "/Products",
         name: "Products",
