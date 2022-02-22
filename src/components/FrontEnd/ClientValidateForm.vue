@@ -73,7 +73,9 @@
       ></textarea>
     </div>
     <div class="text-end">
-      <button ref="sendOrder" type="submit" class="btn btn-danger">送出訂單</button>
+      <button ref="sendOrder" type="submit" class="btn btn-danger" :disabled="!isEnableSend">
+        送出訂單
+      </button>
     </div>
   </Form>
 </template>
@@ -113,6 +115,7 @@ export default {
         },
         message: "",
       },
+      isEnableSend: false,
     };
   },
   components: {
@@ -139,6 +142,13 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : "需要正確的電話號碼";
     },
+  },
+  mounted() {
+    const vm = this;
+    emitter.on("cartSend", (res) => {
+      console.log(`isEnableSend = ${res}`);
+      vm.isEnableSend = res;
+    });
   },
 };
 </script>

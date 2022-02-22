@@ -95,6 +95,7 @@ export default {
       productId: null,
       isLoadingItem: "",
       isLoading: false,
+      isEnableSend: false,
     };
   },
   methods: {
@@ -128,6 +129,14 @@ export default {
         console.log(res);
         this.getCart();
       });
+    },
+  },
+  watch: {
+    cartData(newVal) {
+      if (newVal.carts.length === 0) this.isEnableSend = false;
+      else this.isEnableSend = true;
+      const vm = this;
+      emitter.emit("cartSend", vm.isEnableSend);
     },
   },
   created() {
