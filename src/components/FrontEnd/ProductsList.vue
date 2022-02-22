@@ -47,6 +47,7 @@
               ></span>
               加到購物車
             </button>
+            <router-link :to="`/product/${product.id}`">查看更多</router-link>
           </div>
         </td>
       </tr>
