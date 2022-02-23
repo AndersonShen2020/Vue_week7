@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="container">
+    <h1>預計是用來介紹網站的頁面</h1>
   </div>
 </template>

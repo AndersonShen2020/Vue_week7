@@ -1,5 +1,5 @@
 <template>
-  <div class="container"><h1>預計為首頁的東西，先放在 HelloWorld.vue 中</h1></div>
+  <div class="container"><h1>預計為首頁的頁面</h1></div>
 </template>
 
 <script>

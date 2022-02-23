@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 // 前台
-// import Home from "../views/FrontEnd/Home.vue";
+import HomeView from "../views/FrontEnd/HomeView.vue";
 import about from "@/views/FrontEnd/AboutView.vue";
 import ProductsList from "../views/FrontEnd/ProductsView.vue";
 import Cart from "../views/FrontEnd/CartView.vue";
@@ -18,6 +18,11 @@ const routes = [
     name: "Layout",
     component: () => import("@/views/FrontEnd/LayoutView.vue"),
     children: [
+      {
+        path: "",
+        name: "home",
+        component: HomeView,
+      },
       {
         path: "/about",
         name: "about",
