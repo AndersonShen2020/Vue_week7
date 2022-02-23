@@ -84,7 +84,6 @@ export default {
       });
     },
   },
-  mounted() {},
   watch: {
     id(newVal) {
       axios.get(`${url}/api/${path}/product/${newVal}`).then((res) => {

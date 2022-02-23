@@ -27,14 +27,12 @@
         </td>
         <td>
           <div class="btn-group btn-group-sm">
-            <button
+            <router-link
               type="button"
               class="btn btn-outline-secondary"
-              @click="openProductModal(product.id)"
-              :disabled="isLoadingItem === product.id"
+              :to="`/product/${product.id}`"
+              >查看更多</router-link
             >
-              查看更多
-            </button>
             <button
               type="button"
               class="btn btn-danger"
@@ -47,7 +45,6 @@
               ></span>
               加到購物車
             </button>
-            <router-link :to="`/product/${product.id}`">查看更多</router-link>
           </div>
         </td>
       </tr>
