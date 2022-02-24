@@ -8,6 +8,7 @@ import Cart from "../views/FrontEnd/CartView.vue";
 
 // 後台
 import Login from "../views/BackEnd/LoginView.vue";
+import BackEndHomeView from "../views/BackEnd/BackEndHomeView.vue";
 import Dashboard from "../views/BackEnd/DashboardView.vue";
 import Products from "../views/BackEnd/ProductsView.vue";
 
@@ -57,6 +58,11 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     children: [
+      {
+        path: "",
+        name: "BackEndHome",
+        component: BackEndHomeView,
+      },
       {
         path: "products",
         name: "products",

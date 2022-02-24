@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col-8">
-        <CartUnit></CartUnit>
+        <ShoppingCart></ShoppingCart>
       </div>
       <div class="col-4">
         <ValidateForm></ValidateForm>
@@ -12,11 +12,11 @@
 </template>
 <script>
 import ValidateForm from "@/components/FrontEnd/ClientValidateForm.vue";
-import CartUnit from "@/components/FrontEnd/Shoppingcart.vue";
+import ShoppingCart from "@/components/FrontEnd/ShoppingCart.vue";
 
 export default {
   components: {
-    CartUnit,
+    ShoppingCart,
     ValidateForm,
   },
 };
