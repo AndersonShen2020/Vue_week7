@@ -13,7 +13,7 @@
             <p class="display-4 fw-bold">{{ product.title }}</p>
           </div>
           <div class="mb-3">
-            <p>{{ product.description }}</p>
+            <p class="pre">{{ product.description }}</p>
           </div>
           <div class="mb-3 text-end">
             <span class="fs-3 fw-bold">NT ${{ product.price }} 元</span>
@@ -69,4 +69,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.pre {
+  white-space: pre-wrap;
+}
+</style>
