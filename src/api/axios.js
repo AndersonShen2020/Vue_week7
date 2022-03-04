@@ -27,6 +27,7 @@ export async function checkAdmin() {
   try {
     await axios.post(`${url}/api/user/check`);
     console.log("確認用戶仍然持續登入");
+    router.push("/admin");
   } catch (err) {
     alert(err.response.data.message);
     router.push("/Login");

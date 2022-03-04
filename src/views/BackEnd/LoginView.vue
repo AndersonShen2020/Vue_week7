@@ -38,7 +38,7 @@
 </template>
 <script>
 import router from "@/router";
-import { login } from "@/api/axios";
+import { login, checkAdmin } from "@/api/axios";
 
 export default {
   data() {
@@ -56,6 +56,9 @@ export default {
         router.push("/admin");
       }
     },
+  },
+  async mounted() {
+    await checkAdmin();
   },
 };
 </script>
