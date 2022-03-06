@@ -7,6 +7,9 @@
       <li class="list-group-item">
         <router-link class="nav-link" to="/admin/Products">產品</router-link>
       </li>
+      <li class="list-group-item">
+        <router-link class="nav-link" to="/admin/Coupons">優惠卷</router-link>
+      </li>
     </ul>
   </aside>
 </template>

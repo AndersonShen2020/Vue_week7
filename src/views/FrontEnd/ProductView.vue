@@ -35,6 +35,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 const url = process.env.VUE_APP_API; // 請加入站點
@@ -64,8 +65,8 @@ export default {
       });
     },
   },
-  mounted() {
-    this.getProduct();
+  async mounted() {
+    await this.getProduct();
   },
 };
 </script>
