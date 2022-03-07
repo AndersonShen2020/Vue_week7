@@ -31,7 +31,7 @@
                 type="checkbox"
                 :id="`paidSwitch${item.id}`"
                 v-model="item.is_paid"
-                @change="updatePaid(item)"
+                @change="updateOrder(item)"
               />
               <label class="form-check-label" :for="`paidSwitch${item.id}`">
                 <span v-if="item.is_paid">已付款</span>
@@ -41,7 +41,9 @@
           </td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-primary btn-sm" type="button">檢視</button>
+              <button class="btn btn-outline-primary btn-sm" type="button" @click="openOrder(item)">
+                檢視
+              </button>
               <button class="btn btn-outline-danger btn-sm" type="button">刪除</button>
             </div>
           </td>
@@ -50,6 +52,7 @@
     </tbody>
   </table>
   <pagination :pages="pagination" @emitpages="getOrders"></pagination>
+  <OrderModal ref="orderModal" :order-data="tempOrder" @update-orders="updateOrder"></OrderModal>
 </template>
 
 <script>
@@ -57,15 +60,18 @@ import axios from "axios";
 
 // component
 import pagination from "@/components/common/pagination.vue";
+import OrderModal from "@/components/BackEnd/OrderModal.vue";
 
 export default {
   components: {
     pagination,
+    OrderModal,
   },
   data() {
     return {
       pagination: null,
       orders: [],
+      tempOrder: {},
     };
   },
   methods: {
@@ -74,13 +80,31 @@ export default {
       await axios
         .get(urlPath)
         .then((res) => {
-          console.log(res);
+          console.log(`Orders 更新成功`);
           this.orders = res.data.orders;
           this.pagination = res.data.pagination;
         })
         .catch((err) => {
           console.dir(err.response);
         });
+      this.$refs.orderModal.hideModal();
+    },
+    openOrder(item) {
+      this.tempOrder = item;
+      this.$refs.orderModal.openModal();
+    },
+    async updateOrder(item) {
+      console.log(item.id);
+      const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      await axios
+        .put(urlPath, { data: item })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
+      await this.getOrders();
     },
   },
   mounted() {

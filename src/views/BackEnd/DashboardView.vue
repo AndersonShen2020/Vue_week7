@@ -20,7 +20,7 @@ export default {
 </script>
 <style lang="scss">
 .sidebar {
-  background-color: black;
+  background-color: #f8f9fa;
   width: 280px;
   min-height: calc(100vh - 66px);
 }
