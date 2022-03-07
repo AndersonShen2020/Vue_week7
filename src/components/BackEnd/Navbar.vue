@@ -4,10 +4,10 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#/">回首頁</a>
+          <router-link class="nav-link" to="/"> 回首頁 </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">登出</a>
+          <router-link class="nav-link" to="/"> 登出 </router-link>
         </li>
       </ul>
     </div>
