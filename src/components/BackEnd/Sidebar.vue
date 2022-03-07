@@ -13,3 +13,8 @@
     </ul>
   </aside>
 </template>
+<style>
+.nav-link:hover {
+  background-color: burlywood;
+}
+</style>
