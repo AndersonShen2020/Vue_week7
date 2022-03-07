@@ -49,42 +49,22 @@
       </template>
     </tbody>
   </table>
-  <pagination :pages="pagination" @emitpages="getOrders"></pagination>
 </template>
-
 <script>
 import axios from "axios";
-
-// component
-import pagination from "@/components/common/pagination.vue";
+const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/orders`;
 
 export default {
-  components: {
-    pagination,
-  },
   data() {
     return {
-      pagination: null,
       orders: [],
     };
   },
-  methods: {
-    async getOrders(page = 1) {
-      const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
-      await axios
-        .get(urlPath)
-        .then((res) => {
-          console.log(res);
-          this.orders = res.data.orders;
-          this.pagination = res.data.pagination;
-        })
-        .catch((err) => {
-          console.dir(err.response);
-        });
-    },
-  },
   mounted() {
-    this.getOrders();
+    axios.get(urlPath).then((res) => {
+      console.log(res);
+      this.orders = res.data.orders;
+    });
   },
 };
 </script>

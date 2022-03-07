@@ -29,8 +29,6 @@
   </nav>
 </template>
 <script>
-// :pages="{ 頁碼資訊 }" -> 把 res.data.pagination 整串丟進來
-// @emitPages="更新頁面事件" -> 外部取得資料的 API 的 function
 export default {
   props: ["pages"],
   methods: {
