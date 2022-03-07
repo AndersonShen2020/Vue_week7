@@ -12,6 +12,7 @@ import BackEndHomeView from "../views/BackEnd/BackEndHomeView.vue";
 import Dashboard from "../views/BackEnd/DashboardView.vue";
 import Products from "../views/BackEnd/ProductsView.vue";
 import Coupons from "../views/BackEnd/CouponsView.vue";
+import Orders from "../views/BackEnd/OrdersView.vue";
 
 const routes = [
   // 前端
@@ -73,6 +74,11 @@ const routes = [
         path: "Coupons",
         name: "Coupons",
         component: Coupons,
+      },
+      {
+        path: "Orders",
+        name: "Orders",
+        component: Orders,
       },
     ],
   },

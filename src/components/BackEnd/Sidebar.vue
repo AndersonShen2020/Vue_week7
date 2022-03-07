@@ -10,10 +10,13 @@
       <li class="list-group-item">
         <router-link class="nav-link" to="/admin/Coupons">優惠卷</router-link>
       </li>
+      <li class="list-group-item">
+        <router-link class="nav-link" to="/admin/Orders">訂單</router-link>
+      </li>
     </ul>
   </aside>
 </template>
-<style>
+<style scoped>
 .nav-link:hover {
   background-color: burlywood;
 }
