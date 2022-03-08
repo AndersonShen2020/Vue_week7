@@ -17,7 +17,7 @@ export default {
     Navbar,
     Sidebar,
   },
-  async mounted() {
+  async created() {
     await checkAdmin();
   },
 };
