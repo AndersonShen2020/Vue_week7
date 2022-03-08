@@ -44,7 +44,13 @@
               <button class="btn btn-outline-primary btn-sm" type="button" @click="openOrder(item)">
                 檢視
               </button>
-              <button class="btn btn-outline-danger btn-sm" type="button">刪除</button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                type="button"
+                @click="openDelOrder(item)"
+              >
+                刪除
+              </button>
             </div>
           </td>
         </tr>
@@ -53,6 +59,7 @@
   </table>
   <pagination :pages="pagination" @emitpages="getOrders"></pagination>
   <OrderModal ref="orderModal" :order-data="tempOrder" @update-orders="updateOrder"></OrderModal>
+  <DelOrderModal ref="delModel" :coupon="tempOrder" @del-order="delOrder"></DelOrderModal>
 </template>
 
 <script>
@@ -61,11 +68,13 @@ import axios from "axios";
 // component
 import pagination from "@/components/common/pagination.vue";
 import OrderModal from "@/components/BackEnd/OrderModal.vue";
+import DelOrderModal from "@/components/BackEnd/delOrder.vue";
 
 export default {
   components: {
     pagination,
     OrderModal,
+    DelOrderModal,
   },
   data() {
     return {
@@ -88,6 +97,7 @@ export default {
           console.dir(err.response);
         });
       this.$refs.orderModal.hideModal();
+      this.$refs.delModel.hideModal();
     },
     openOrder(item) {
       this.tempOrder = item;
@@ -105,6 +115,22 @@ export default {
           console.dir(err);
         });
       await this.getOrders();
+    },
+    openDelOrder(item) {
+      this.tempOrder = item;
+      this.$refs.delModel.openModal();
+    },
+    async delOrder(item) {
+      const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      await axios
+        .delete(urlPath)
+        .then((res) => {
+          console.log(res.data.message);
+          this.getOrders();
+        })
+        .catch((err) => {
+          console.error(err.response.data.message);
+        });
     },
   },
   mounted() {
