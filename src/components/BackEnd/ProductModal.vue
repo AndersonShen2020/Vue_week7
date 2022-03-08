@@ -37,6 +37,19 @@
                 </div>
                 <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
               </div>
+              <div class="mb-2">
+                <div class="mb-3">
+                  <label for="customImage" class="form-label">從本地端上傳圖片</label>
+                  <input
+                    ref="fileInput"
+                    type="file"
+                    class="form-control"
+                    id="customImage"
+                    @change="customImageFile"
+                  />
+                </div>
+                <img class="img-fluid" :src="tempProduct.fileImage" alt="" />
+              </div>
               <h3>多圖新增</h3>
               <div v-if="Array.isArray(tempProduct.imagesUrl)">
                 <div v-for="(pic, idx) in tempProduct.imagesUrl" :key="idx">
@@ -189,6 +202,7 @@
 </template>
 <script>
 import { addProduct, updateProduct } from "@/api/axios";
+import axios from "axios";
 
 export default {
   props: ["productinfo", "state"],
@@ -210,6 +224,23 @@ export default {
       }
       // 更新畫面
       this.$emit("update");
+    },
+    customImageFile() {
+      let urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
+      const file = this.$refs.fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file-to-upload", file);
+      axios
+        .post(urlPath, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.tempProduct.fileImage = res.data.imageUrl;
+          this.$refs.fileInput.value = "";
+        });
     },
   },
   watch: {

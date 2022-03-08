@@ -72,6 +72,7 @@ const tempProduct = {
   is_enabled: 1,
   imageUrl: "",
   imagesUrl: [],
+  fileImage: "",
 };
 
 export default {
