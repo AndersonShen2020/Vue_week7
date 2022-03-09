@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div
     id="productModal"
     ref="productModal"
@@ -204,17 +205,26 @@
 import { addProduct, updateProduct } from "@/api/axios";
 import axios from "axios";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   props: ["productinfo", "state"],
+  emits: ["update"],
+  components: {
+    Loading,
+  },
   data() {
     return {
       tempProduct: this.productinfo,
       isNew: this.state,
       productModal: null,
+      isLoading: false,
     };
   },
   methods: {
     async updateItem() {
+      this.isLoading = true;
       if (this.isNew === true) {
         // 新增產品
         await addProduct({ data: this.tempProduct });
@@ -224,13 +234,15 @@ export default {
       }
       // 更新畫面
       this.$emit("update");
+      this.isLoading = false;
     },
-    customImageFile() {
+    async customImageFile() {
+      this.isLoading = true;
       let urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
       const file = this.$refs.fileInput.files[0];
       const formData = new FormData();
       formData.append("file-to-upload", file);
-      axios
+      await axios
         .post(urlPath, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -241,6 +253,7 @@ export default {
           this.tempProduct.fileImage = res.data.imageUrl;
           this.$refs.fileInput.value = "";
         });
+      this.isLoading = false;
     },
   },
   watch: {

@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -70,21 +71,27 @@ import pagination from "@/components/common/pagination.vue";
 import OrderModal from "@/components/BackEnd/OrderModal.vue";
 import DelOrderModal from "@/components/BackEnd/delOrder.vue";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   components: {
     pagination,
     OrderModal,
     DelOrderModal,
+    Loading,
   },
   data() {
     return {
       pagination: null,
       orders: [],
       tempOrder: {},
+      isLoading: false,
     };
   },
   methods: {
     async getOrders(page = 1) {
+      this.isLoading = true;
       const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       await axios
         .get(urlPath)
@@ -98,12 +105,14 @@ export default {
         });
       this.$refs.orderModal.hideModal();
       this.$refs.delModel.hideModal();
+      this.isLoading = false;
     },
     openOrder(item) {
       this.tempOrder = item;
       this.$refs.orderModal.openModal();
     },
     async updateOrder(item) {
+      this.isLoading = true;
       console.log(item.id);
       const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       await axios
@@ -115,12 +124,14 @@ export default {
           console.dir(err);
         });
       await this.getOrders();
+      this.isLoading = false;
     },
     openDelOrder(item) {
       this.tempOrder = item;
       this.$refs.delModel.openModal();
     },
     async delOrder(item) {
+      this.isLoading = true;
       const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       await axios
         .delete(urlPath)
@@ -131,6 +142,7 @@ export default {
         .catch((err) => {
           console.error(err.response.data.message);
         });
+      this.isLoading = false;
     },
   },
   mounted() {

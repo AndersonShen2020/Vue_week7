@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div
     class="modal fade"
     id="couponModal"
@@ -86,7 +87,13 @@
 import modalControl from "@/api/modalControl";
 import axios from "axios";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading,
+  },
   props: {
     coupon: {
       type: Object,
@@ -99,10 +106,12 @@ export default {
       default: false,
     },
   },
+  emits: ["resetCoupons"],
   data() {
     return {
       tempCoupon: {},
       due_date: "",
+      isLoading: false,
     };
   },
   mounted() {
@@ -110,6 +119,7 @@ export default {
   },
   methods: {
     async updateCoupon() {
+      this.isLoading = true;
       let authorization = `post`;
       let urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon`;
       const data = this.tempCoupon;
@@ -125,6 +135,7 @@ export default {
           console.error(err.response.data.message);
         });
       this.$emit("resetCoupons");
+      this.isLoading = false;
     },
   },
   watch: {

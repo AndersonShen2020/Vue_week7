@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="container">
     <div class="text-end mt-4">
       <button class="btn btn-primary" type="button" @click="openCouponModal(true)">
@@ -55,11 +56,15 @@ import pagination from "@/components/common/pagination.vue";
 import couponsModal from "@/components/BackEnd/CouponsModal.vue";
 import delCoupons from "@/components/BackEnd/delCoupon.vue";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   components: {
     pagination,
     couponsModal,
     delCoupons,
+    Loading,
   },
   data() {
     return {
@@ -72,10 +77,12 @@ export default {
         percent: 100,
         code: "",
       },
+      isLoading: false,
     };
   },
   methods: {
     async getCoupons(page = 1) {
+      this.isLoading = true;
       const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
       await axios
         .get(urlPath)
@@ -88,6 +95,7 @@ export default {
         });
       this.$refs.couponModal.hideModal();
       this.$refs.delCoupon.hideModal();
+      this.isLoading = false;
     },
     openCouponModal(isNew, item) {
       this.isNew = isNew;

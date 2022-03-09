@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div
     id="delCouponModal"
     class="modal fade"
@@ -38,12 +39,20 @@
 import Modal from "bootstrap/js/dist/modal";
 import axios from "axios";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading,
+  },
   props: ["coupon"],
+  emits: ["resetCoupons"],
   data() {
     return {
       modal: null,
       tempProduct: this.coupon,
+      isLoading: false,
     };
   },
   methods: {
@@ -53,9 +62,10 @@ export default {
     hideModal() {
       this.modal.hide();
     },
-    deleteItem() {
+    async deleteItem() {
+      this.isLoading = true;
       const urlPath = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempProduct.id}`;
-      axios
+      await axios
         .delete(urlPath)
         .then((res) => {
           console.log(res.data.message);
@@ -64,6 +74,7 @@ export default {
         .catch((err) => {
           console.error(err.response.data.message);
         });
+      this.isLoading = false;
     },
   },
   watch: {

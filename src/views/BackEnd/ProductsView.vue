@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="container">
     <div class="text-end mt-4">
       <button class="btn btn-primary" @click="showModal('new')">建立新的產品</button>
@@ -61,6 +62,9 @@ import pagination from "@/components/common/pagination.vue";
 import productModal from "@/components/BackEnd/ProductModal.vue";
 import delProductModal from "@/components/BackEnd/delProduct.vue";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 const tempProduct = {
   title: "",
   category: "",
@@ -80,6 +84,7 @@ export default {
     pagination,
     productModal,
     delProductModal,
+    Loading,
   },
   data() {
     return {
@@ -89,17 +94,20 @@ export default {
       tempProduct,
       productModal: null,
       delProductModal: null,
+      isLoading: false,
     };
   },
 
   methods: {
     async init(page = 1) {
       console.log("從遠端抓新資料");
+      this.isLoading = true;
       const { products, pagination } = await getProducts(page);
       this.products = products;
       this.pagination = pagination;
       this.productModal.hide();
       this.delProductModal.hide();
+      this.isLoading = false;
     },
     showModal(state, item) {
       if (state === "new") {

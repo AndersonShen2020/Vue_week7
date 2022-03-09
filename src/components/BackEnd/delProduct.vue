@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div
     id="delProductModal"
     ref="delProductModal"
@@ -37,19 +38,29 @@
 <script>
 import { deleteProduct } from "@/api/axios";
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading,
+  },
   props: ["productinfo"],
+  emits: ["update"],
   data() {
     return {
       tempProduct: this.productinfo,
       delProductModal: null,
+      isLoading: false,
     };
   },
   methods: {
     async deleteItem() {
+      this.isLoading = true;
       await deleteProduct(this.tempProduct.id);
       // 更新畫面
       this.$emit("update");
+      this.isLoading = false;
     },
   },
   watch: {
