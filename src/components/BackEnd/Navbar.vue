@@ -7,15 +7,35 @@
           <router-link class="nav-link" to="/"> 回首頁 </router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/"> 登出 </router-link>
+          <a class="nav-link logout" @click="logout"> 登出 </a>
         </li>
       </ul>
     </div>
   </nav>
 </template>
 
-<style lang="scss">
+<script>
+import axios from "axios";
+
+export default {
+  methods: {
+    async logout() {
+      let urlPath = `${process.env.VUE_APP_API}/logout`;
+      await axios.post(urlPath).then((res) => {
+        alert(res.data.message);
+        document.cookie = "hexToken=;expires=;";
+        this.$router.push("/");
+      });
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
 .nav-item {
   padding: 5px;
+}
+.logout:hover {
+  cursor: pointer;
 }
 </style>
